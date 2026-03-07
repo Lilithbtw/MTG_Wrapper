@@ -1,0 +1,15 @@
+[project]
+name = "mtg-wrapper"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "monsterui>=1.0.44",
+    "pydantic>=2.12.5",
+    "python-fasthtml>=0.12.48",
+    "requests>=2.32.5",
+]
+
+[tool.ruff.lint]
+ignore = ["F403", "F405"]
