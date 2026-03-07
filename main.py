@@ -49,7 +49,7 @@ def index():
             Button("Submit Form", cls=(ButtonT.primary, "w-[8%]"))
         )
 
-        return Titled(Center("MTG Card Viewer"),
+        return Titled("MTG Explorer - Index",Center("MTG Card Viewer"),
             Br(),
             search_form,
             Br(),
@@ -58,7 +58,7 @@ def index():
             
         
     except BaseHTTPError as e:
-        return Titled(Center("MTG Card Viewer"),
+        return Titled("MTG Explorer - Error {e}", Center("MTG Card Viewer"),
             Br(),
             Card(
                 H1("There as an error"),
@@ -155,7 +155,7 @@ def search(character: str = ""):
                         Button("Submit Form", cls=(ButtonT.primary, "w-[8%]"))
             )
                     
-            return Br(),Titled(f"Results for character: {character.capitalize()}",
+            return Br(),Titled("MTG Explorer - Search",f"Results for character: {character.capitalize()}",
                 Br(),
                 search_form,
                 Br(),
