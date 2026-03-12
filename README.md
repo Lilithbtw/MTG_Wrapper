@@ -23,12 +23,8 @@ projects).
 uv venv
 
 # Source binaries
-source .venv/bin/activate
+uv sync
 
-# Install required dependancies
-uv pip install -r requirements.txt
-
-# Run the development server
 uv run main.py
 ```
 

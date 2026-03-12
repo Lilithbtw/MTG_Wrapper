@@ -4,10 +4,12 @@ import requests
 from pydantic import BaseModel
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
+styles = (
+    Theme.rose.headers(),
+    Link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-mfizz/2.4.1/font-mfizz.min.css")
+)
 
-hdrs = Theme.rose.headers()
-
-app,rt = fast_app(hdrs=hdrs)
+app,rt = fast_app(hdrs=styles)
 
 rcnt_srchs = []
 
@@ -40,22 +42,46 @@ def RecentChips():
         ),
         cls="rounded-2xl shadow-sm"
     )
+
+def LoveFooter():
+    return Footer(cls="border-t py-6 mt-10")(
+        Div(cls="uk-container uk-container-xl text-center text-l")(
+            A(href="https://github.com/Lilithbtw/MTG_Wrapper", cls="underline decoration-pink-500 decoration-2 underline-offset-4 transition-all hover:underline-offset-2")(
+                P("Made with ", Span("<3", cls="text-pink-500"), " Using...", cls="text-muted-foreground"),
+            ),
+            Div(cls="tech-stack")(
+                I(cls="icon-docker text text-2xl",aria_label="Docker Icon"),
+                I(cls="icon-python text-2xl",aria_label="Python Icon"),
+            )
+        )
+    )
+
+def SearchForm():
+    search_form = Form(method="get", action="/search", cls="flex items-end gap-2 w-full")(
+        LabelInput("", id="search-input", name="character", placeholder="Enter Card name...", cls="flex-1"),    
+        Button("Submit", cls=(ButtonT.primary))
+    )
+
+    return search_form
     
 @rt('/')
 def index():
-    try:        
-        search_form = Form(method="get", action="/search", cls="flex items-end gap-2 w-full")(
-            LabelInput("", id="search-input", name="character", placeholder="Enter Card name...", cls="w-[92%]"),   
-            Button("Submit Form", cls=(ButtonT.primary, "w-[8%]"))
-        )
+    try:
 
-        return Titled("MTG Explorer - Index",Center("MTG Card Viewer"),
-            Br(),
-            search_form,
-            Br(),
-            RecentChips()
-        )
-            
+        return Titled("MTG Explorer - Index",
+                Div(cls="flex flex-col min-h-screen")(
+                    Main(cls="pb-32")(
+                        Center("MTG Card Viewer"),
+                        Br(),
+                        SearchForm(),
+                        Br(),
+                        RecentChips()
+                    ),
+                    Div(cls="fixed bottom-0 left-0 w-full bg-background")(
+                        LoveFooter()
+                    )
+                )
+            )            
         
     except BaseHTTPError as e:
         return Titled("MTG Explorer - Error {e}", Center("MTG Card Viewer"),
@@ -150,18 +176,18 @@ def search(character: str = ""):
                     )) for c in magic_cards
                 ]
             
-            search_form = Form(method="get", action="/search", cls="flex items-end gap-2 w-full")(
-                        LabelInput("", id="search-input", name="character", placeholder="Enter Card name...", cls="w-[92%]"),   
-                        Button("Submit Form", cls=(ButtonT.primary, "w-[8%]"))
-            )
                     
             return Br(),Titled("MTG Explorer - Search",f"Results for character: {character.capitalize()}",
                 Br(),
-                search_form,
+                SearchForm(),
                 Br(),
                 A("← Back to Index", href="/", cls="text-base"),
                 Br(),Br(),
-                Grid(*results,cls="grid justify-center")
+                Grid(*results,cls="grid justify-center"),
+                Div(cls="bottom-0 left-0 w-full bg-background")(
+                    LoveFooter()
+                )
+
             )
 
     except BaseHTTPError as e:
