@@ -114,7 +114,9 @@ def search(character: str = ""):
     url = f"{full_api_url}/search?q={character}"
     
     try: 
-        response = requests.get(url)
+        headers = {"User-Agent": "MTG-Wrapper-Client; FastHTML Web App"}
+
+        response = requests.get(url,headers=headers)
         
         data = response.json()
         
