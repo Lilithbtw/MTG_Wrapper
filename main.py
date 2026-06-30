@@ -13,6 +13,8 @@ __all__ = ["app"]
 
 app,rt = fast_app(hdrs=styles)
 
+application = app
+
 rcnt_srchs = []
 
 def recent_searches(search: str):    
