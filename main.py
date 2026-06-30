@@ -9,6 +9,8 @@ styles = (
     Link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-mfizz/2.4.1/font-mfizz.min.css")
 )
 
+__all__ = ["app"]
+
 app,rt = fast_app(hdrs=styles)
 
 rcnt_srchs = []
