@@ -199,6 +199,3 @@ def search(character: str = ""):
                 H1("There as an error"),
                 P(f"Error {e}")
             )
-
-if __name__ == "__main__":
-    serve(host="0.0.0.0", port=5555)
